@@ -46,7 +46,7 @@ export default Router.extend({
     // Create a default success and/or error handler if
     // one is not provided.
     if (!options.globalSuccessFn) {
-      options.globalSuccessFn = function() { };
+      options.globalSuccessFn = function() { /* dummy function */ };
     }
     if (!options.globalErrorFn) {
       options.globalErrorFn = function(err) {
@@ -144,7 +144,7 @@ export default Router.extend({
     await this.appState.setIonResponse(ionResponse, this.hooks);
   },
 
-  handleIdxResponseFailure(error = {}) {
+  handleIdxResponseFailure(error = { details: undefined }) {
     // IDX errors will not call the global error handler
     error = formatError(error);
     this.handleUpdateAppState(error.details);

@@ -14,10 +14,13 @@ module.exports = function(outputFilename, mode = 'development') {
   const babelOptions = {
     configFile: false, // do not load from babel.config.js
     babelrc: false, // do not load from .babelrc
-    presets: [],
+    presets: [
+      '@babel/preset-typescript',
+    ],
     plugins: [
       './packages/@okta/babel-plugin-handlebars-inline-precompile',
-      '@babel/plugin-transform-modules-commonjs'
+      '@babel/plugin-transform-modules-commonjs',
+      'add-module-exports'
     ]
   };
 
@@ -31,7 +34,7 @@ module.exports = function(outputFilename, mode = 'development') {
   }
 
   return {
-    entry: [`${SRC}/widget/OktaSignIn.js`],
+    entry: [`${SRC}/widget/OktaSignIn.ts`],
     mode,
     devtool: 'source-map',
     output: {
@@ -41,6 +44,7 @@ module.exports = function(outputFilename, mode = 'development') {
       libraryTarget: 'umd'
     },
     resolve: {
+      extensions: ['.js', '.ts'],
       modules: [SRC, 'packages', 'node_modules'],
       alias: {
         // General remapping
@@ -66,7 +70,7 @@ module.exports = function(outputFilename, mode = 'development') {
       rules: [
         // Babel
         {
-          test: /\.js$/,
+          test: /\.[jt]s$/,
           exclude: function(filePath) {
             const filePathContains = (f) => filePath.indexOf(f) > 0;
             const npmRequiresTransform = [

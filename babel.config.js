@@ -1,5 +1,6 @@
 // Used by babel-jest
 const presets = [
+  '@babel/preset-typescript',
   ['@babel/preset-env', {
     exclude: [
       '@babel/plugin-transform-regenerator'

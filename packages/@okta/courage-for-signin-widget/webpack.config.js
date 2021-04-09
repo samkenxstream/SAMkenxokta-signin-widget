@@ -23,9 +23,47 @@ const EXTERNAL_PATHS = [
   'okta-i18n-bundles'
 ];
 
+const babelExclude = function (filePath) {
+  const filePathContains = (f) => filePath.indexOf(f) > 0;
+  const npmRequiresTransform = [
+    '/node_modules/@okta/courage',
+  ].some(filePathContains);
+  const shallBeExcluded = [
+    '/node_modules/',
+  ].some(filePathContains);
+  return shallBeExcluded && !npmRequiresTransform;
+};
+
+const babelOptions = {
+  presets: [
+    '@babel/preset-typescript',
+    ['@babel/preset-env', {modules: false }]
+  ],
+  plugins: [
+    '@okta/babel-plugin-handlebars-inline-precompile'
+  ],
+  targets: {
+    esmodules: true,
+    node: 'current'
+  }
+};
+
+// TODO: automate this list? include maps?
+const exportCourageTypes = [
+  'framework/View',
+  'views/forms/BaseInput',
+  'models/BaseModel',
+  'models/Model',
+  'util/handlebars-wrapper',
+  'util/jquery-wrapper',
+  'util/underscore-wrapper',
+  'views/Backbone.ListView'
+];
+const EXPORT_COURAGE_TYPES_GLOB = `{${exportCourageTypes.join(',')}}.d.ts`; 
+
 const webpackConfig = {
   mode: 'development',
-  entry: ['./src/CourageForSigninWidget.js'],
+  entry: ['./src/CourageForSigninWidget'],
   devtool: 'source-map',
   output: {
     // why the destination is outside current directory?
@@ -37,6 +75,7 @@ const webpackConfig = {
   },
   externals: EXTERNAL_PATHS,
   resolve: {
+    extensions: ['.js', '.ts'],
     alias: {
 
       // jsons is from StringUtil
@@ -63,25 +102,10 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: function (filePath) {
-          const filePathContains = (f) => filePath.indexOf(f) > 0;
-          const npmRequiresTransform = [
-            '/node_modules/@okta/courage',
-          ].some(filePathContains);
-          const shallBeExcluded = [
-            '/node_modules/',
-          ].some(filePathContains);
-          return shallBeExcluded && !npmRequiresTransform;
-        },
+        test: /\.[jt]s$/,
+        exclude: babelExclude,
         loader: 'babel-loader',
-        options: {
-          presets: [['@babel/preset-env', { modules: 'commonjs' }]],
-          plugins: [
-            '@okta/babel-plugin-handlebars-inline-precompile',
-            'add-module-exports'
-          ]
-        }
+        options: babelOptions
       },
     ]
   },
@@ -116,6 +140,11 @@ const webpackConfig = {
         context: `${COURAGE_DIST}/properties/translations/`,
         from: 'country_*.properties',
         to: `${I18N_DIR}/dist/properties/`,
+      },
+      {
+        context: `${NODE_MODULES_SRC}/courage/types/generated/src`,
+        from: EXPORT_COURAGE_TYPES_GLOB,
+        to: `${PUBLISH_DIR}/types/@okta/courage`,
       }
     ]),
   ]
