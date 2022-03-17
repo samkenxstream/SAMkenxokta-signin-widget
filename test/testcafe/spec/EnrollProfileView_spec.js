@@ -7,6 +7,7 @@ import EnrollProfileSignUp from '../../../playground/mocks/data/idp/idx/enroll-p
 import EnrollProfileSignUpWithAdditionalFields from '../../../playground/mocks/data/idp/idx/enroll-profile-new-additional-fields';
 import EnrollProfileSignUpWithBooleanFields from '../../../playground/mocks/data/idp/idx/enroll-profile-new-boolean-fields';
 import EnrollProfileSignUpAllBaseAttributes from '../../../playground/mocks/data/idp/idx/enroll-profile-all-base-attributes';
+import EnrollProfileSignUpWithPassword from '../../../playground/mocks/data/idp/idx/enroll-profile-with-password';
 
 
 const EnrollProfileSignUpMock = RequestMock()
@@ -38,6 +39,12 @@ const EnrollProfileSignUpAllBaseAttributesMock = RequestMock()
   .respond(Identify)
   .onRequestTo('http://localhost:3000/idp/idx/enroll')
   .respond(EnrollProfileSignUpAllBaseAttributes);
+
+const EnrollProfileSignUpWithPasswordMock = RequestMock()
+  .onRequestTo('http://localhost:3000/idp/idx/introspect')
+  .respond(Identify)
+  .onRequestTo('http://localhost:3000/idp/idx/enroll')
+  .respond(EnrollProfileSignUpWithPassword);
 
 const requestLogger = RequestLogger(
   /idx\/*/,
@@ -156,4 +163,26 @@ test.requestHooks(requestLogger, EnrollProfileSignUpAllBaseAttributesMock)('All 
     // all 'label' fields for base attributes in json are appended with a '1'
     await t.expect(await enrollProfilePage.getFormFieldLabel(selector)).eql(formFieldToLabel[formField]);
   });
+});
+
+test.requestHooks(requestLogger, EnrollProfileSignUpWithPasswordMock)('should show prompt for password and password requirements', async t => {
+  const enrollProfilePage = new EnrollProfileViewPageObject(t);
+  const identityPage = await setup(t);
+  await identityPage.clickSignUpLink();
+
+  requestLogger.clear();
+  await t.expect(enrollProfilePage.getFormTitle()).eql('Sign up');
+  await t.expect(await enrollProfilePage.getFormFieldLabel('userProfile.firstName')).eql('First name');
+  await t.expect(await enrollProfilePage.getFormFieldLabel('userProfile.lastName')).eql('Last name');
+  await t.expect(await enrollProfilePage.getFormFieldLabel('userProfile.email')).eql('Email');
+  // verify prompt & field for password are rendered
+  await t.expect(await enrollProfilePage.getFormFieldLabel('credentials.passcode')).eql('Enter Password');
+  // verify password text toggle is rendered
+  await t.expect(await identityPage.hasShowTogglePasswordIcon()).ok();
+  // verify password requirements are rendered
+  await t.expect(await enrollProfilePage.form.elementExist('section[data-se="password-authenticator--rules"]')).ok();
+  await t.expect(await enrollProfilePage.form.getInnerTexts('div[class="password-authenticator--heading"]')).eql(['Password requirements:']);
+  await t.expect(await enrollProfilePage.form.elementExist('ul[class="password-authenticator--list"]')).ok();
+
+  await t.expect(await enrollProfilePage.getSaveButtonLabel()).eql('Sign Up');
 });
