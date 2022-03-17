@@ -133,8 +133,8 @@ export default BaseView.extend({
   getPasswordPolicySettings() {
     // retrieve password policy from "credentials" object in remediation
     const currentViewState = this.options.currentViewState.value;
-    const credentials = currentViewState.filter((obj) => { return obj.name === "credentials" })[0];
-    return !!credentials ? credentials.relatesTo?.value?.settings : undefined;
+    const credentials = currentViewState.filter((obj) => { return obj.name === 'credentials'; })[0];
+    return credentials ? credentials.relatesTo?.value?.settings : undefined;
   },
   triggerAfterError(model, error) {
     // render error if password is invalid

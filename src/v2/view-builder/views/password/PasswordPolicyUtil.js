@@ -1,7 +1,7 @@
 import { View } from 'okta';
 import hbs from 'handlebars-inline-precompile';
 
-const generatePasswordPolicyHtml = function (form, rulesList, prepend) {
+const generatePasswordPolicyHtml = function(form, rulesList, prepend) {
   form.add(
     View.extend({
       tagName: 'section',
@@ -21,9 +21,9 @@ const generatePasswordPolicyHtml = function (form, rulesList, prepend) {
       prepend,
       selector: '.o-form-fieldset-container',
     }
-  )
+  );
 };
 
 export {
   generatePasswordPolicyHtml,
-}
+};
