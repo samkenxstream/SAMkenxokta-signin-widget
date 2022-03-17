@@ -176,7 +176,7 @@ test.requestHooks(requestLogger, EnrollProfileSignUpWithPasswordMock)('should sh
   await t.expect(await enrollProfilePage.getFormFieldLabel('userProfile.lastName')).eql('Last name');
   await t.expect(await enrollProfilePage.getFormFieldLabel('userProfile.email')).eql('Email');
   // verify prompt & field for password are rendered
-  await t.expect(await enrollProfilePage.getFormFieldLabel('credentials.passcode')).eql('Enter Password');
+  await t.expect(await enrollProfilePage.getFormFieldLabel('credentials.passcode')).eql('Password');
   // verify password text toggle is rendered
   await t.expect(await identityPage.hasShowTogglePasswordIcon()).ok();
   // verify password requirements are rendered
