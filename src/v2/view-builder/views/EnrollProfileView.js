@@ -1,6 +1,10 @@
 import { loc, Model, _ } from 'okta';
 import { BaseForm, BaseFooter, BaseView } from '../internals';
 import { FORMS as RemediationForms } from '../../ion/RemediationConstants';
+import {
+  getPasswordComplexityDescriptionForHtmlList,
+  removeRequirementsFromError } from '../utils/AuthenticatorUtil';
+import { generatePasswordPolicyHtml } from './password/PasswordPolicyUtil';
 
 const Body = BaseForm.extend({
   title() {
@@ -107,7 +111,6 @@ export default BaseView.extend({
   },
   postRender() {
     BaseView.prototype.postRender.apply(this, arguments);
-
     const modelError = this.model.get('parseSchemaError');
 
     if (modelError) {
@@ -115,5 +118,27 @@ export default BaseView.extend({
         responseJSON: modelError,
       });
     }
-  }
+
+    // Prompt for password w/ SSR if enabled (credentials object in remediation)
+    const policy = this.getPasswordPolicySettings();
+    this.displayPasswordPolicy(policy);
+  },
+  displayPasswordPolicy(policy) {
+    // retrieve password requirements from policy
+    if (policy) {
+      const rulesList = getPasswordComplexityDescriptionForHtmlList(policy);
+      generatePasswordPolicyHtml(this, rulesList, false);
+    }
+  },
+  getPasswordPolicySettings() {
+    // retrieve password policy from "credentials" object in remediation
+    const currentViewState = this.options.currentViewState.value;
+    const credentials = currentViewState.filter((obj) => { return obj.name === "credentials" })[0];
+    return !!credentials ? credentials.relatesTo?.value?.settings : undefined;
+  },
+  triggerAfterError(model, error) {
+    // render error if password is invalid
+    error.responseJSON = removeRequirementsFromError(error.responseJSON);
+    this.options.appState.trigger('afterError', error);
+  },
 });
