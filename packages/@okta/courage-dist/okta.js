@@ -2314,7 +2314,7 @@ var parseProperties = function parseProperties(resp) {
 
   var properties = _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.map(resp.schema.properties, function (property, name) {
     return _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.extend({
-      name
+      name: name
     }, property);
   });
 
@@ -4347,7 +4347,7 @@ __webpack_require__.r(__webpack_exports__);
  * @private
  */
 var props = {
-  local() {
+  local: function local() {
     var settings = window.okta && window.okta.settings || {};
     var theme = window.okta && window.okta.theme || '';
     return {
@@ -4361,8 +4361,7 @@ var props = {
       theme: ['string', false, theme]
     };
   },
-
-  constructor() {
+  constructor: function constructor() {
     _models_Model__WEBPACK_IMPORTED_MODULE_1__.default.apply(this, arguments);
     this.features = window._features || [];
   },
@@ -4372,7 +4371,7 @@ var props = {
    * @param  {String}  feature Feature name
    * @return {Boolean}
    */
-  hasFeature(feature) {
+  hasFeature: function hasFeature(feature) {
     return _underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.contains(this.features, feature);
   },
 
@@ -4381,7 +4380,7 @@ var props = {
    * @param  {Array}  featureArray Features names
    * @return {Boolean} true if any of the give features are enabled. False otherwise
    */
-  hasAnyFeature(featureArray) {
+  hasAnyFeature: function hasAnyFeature(featureArray) {
     return _underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.some(featureArray, this.hasFeature, this);
   },
 
@@ -4390,7 +4389,7 @@ var props = {
    * @param  {String}  permission Permission name
    * @return {Boolean}
    */
-  hasPermission(permission) {
+  hasPermission: function hasPermission(permission) {
     return _underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.contains(this.get('permissions'), permission);
   },
 
@@ -4398,10 +4397,9 @@ var props = {
    * Checks if the org has ds theme set
    * @return {Boolean}
    */
-  isDsTheme() {
+  isDsTheme: function isDsTheme() {
     return this.get('theme') === 'dstheme';
   }
-
 };
 /* harmony default export */ __webpack_exports__["default"] = (_models_Model__WEBPACK_IMPORTED_MODULE_1__.default.extend(props));
 
@@ -4438,13 +4436,12 @@ __webpack_require__.r(__webpack_exports__);
    * ```
    * @param {String} methodName the name of the controller method to invoke on the controller
    */
-  invoke() {
+  invoke: function invoke() {
     var args = _underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.toArray(arguments);
 
     args.unshift('__invoke__');
     this.trigger.apply(this, args);
   }
-
 }));
 
 /***/ }),
@@ -4900,11 +4897,9 @@ __webpack_require__.r(__webpack_exports__);
 
     return _underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.isEmpty(queriesString) ? '' : '?' + queriesString;
   },
-
-  isABaseView(obj) {
+  isABaseView: function isABaseView(obj) {
     return obj instanceof _views_BaseView__WEBPACK_IMPORTED_MODULE_1__.default || obj.prototype instanceof _views_BaseView__WEBPACK_IMPORTED_MODULE_1__.default || obj === _views_BaseView__WEBPACK_IMPORTED_MODULE_1__.default;
   }
-
 });
 
 /***/ }),
@@ -7291,7 +7286,7 @@ var disabledEvents = {
 /* harmony default export */ __webpack_exports__["default"] = (_BaseView__WEBPACK_IMPORTED_MODULE_3__.default.extend(
 /** @lends module:Okta.internal.views.components.BaseButtonLink.prototype */
 {
-  attributes() {
+  attributes: function attributes() {
     var defaultAttrs = {
       'data-se': 'button'
     };
@@ -8304,7 +8299,7 @@ var CalloutCallout = _BaseView__WEBPACK_IMPORTED_MODULE_3__.default.extend(
     }
 
     return {
-      icon,
+      icon: icon,
       title: getOption(this, 'title'),
       subtitle: getOption(this, 'subtitle'),
       bullets: getOption(this, 'bullets'),
@@ -9485,7 +9480,7 @@ var getErrorSummary = function getErrorSummary() {
       }
 
       $scrollContext.animate({
-        scrollTop
+        scrollTop: scrollTop
       }, 400);
     }
   },
@@ -13086,8 +13081,7 @@ var InputGroupInputGroupView = _BaseView__WEBPACK_IMPORTED_MODULE_2__.default.ex
     this.inputGroupView = new InputGroupInputGroupView(this.options);
     this.$el.html(this.inputGroupView.render().el);
   },
-
-  readMode() {
+  readMode: function readMode() {
     // Allows the user to use to the default "read mode" of the child inputs instead of
     // rendering a single read mode string for all the child inputs
     if (this.getParam('useChildInputsReadMode')) {
@@ -13096,7 +13090,6 @@ var InputGroupInputGroupView = _BaseView__WEBPACK_IMPORTED_MODULE_2__.default.ex
       _BaseInput__WEBPACK_IMPORTED_MODULE_3__.default.prototype.readMode.apply(this, arguments);
     }
   },
-
   toStringValue: function toStringValue() {
     var strings = this.inputGroupView.map(function (input) {
       return input.getReadModeString();
@@ -14224,7 +14217,7 @@ function createQtipContent(options) {
   },
   postRender: function postRender() {
     var {
-      params
+      params: params
     } = this.options;
 
     if (params && params.innerTooltip) {
@@ -17723,16 +17716,16 @@ var events = {
   }
 };
 var TextBoxForSigninWidget = _okta_courage_src_views_forms_inputs_TextBox__WEBPACK_IMPORTED_MODULE_32__.default.extend({
-  events
+  events: events
 });
 var PasswordBoxForSigninWidget = _okta_courage_src_views_forms_inputs_PasswordBox__WEBPACK_IMPORTED_MODULE_28__.default.extend({
-  events
+  events: events
 });
 var Form = _okta_courage_src_views_forms_BaseForm__WEBPACK_IMPORTED_MODULE_22__.default.extend({
-  scrollOnError() {
+  scrollOnError: function scrollOnError() {
     // scrollOnError is true by default. Override to false if `scrollOnError` has been set to false in widget settings.
     var {
-      settings
+      settings: settings
     } = this.options;
 
     if (settings.get('features.scrollOnError') === false) {
@@ -17741,7 +17734,6 @@ var Form = _okta_courage_src_views_forms_BaseForm__WEBPACK_IMPORTED_MODULE_22__.
 
     return true;
   }
-
 });
 var loc = _okta_courage_src_util_StringUtil__WEBPACK_IMPORTED_MODULE_13__.default.localize;
 var createButton = _okta_courage_src_util_ButtonFactory__WEBPACK_IMPORTED_MODULE_7__.default.create;

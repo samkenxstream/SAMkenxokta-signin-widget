@@ -37,7 +37,12 @@ const babelExclude = function (filePath) {
 const babelOptions = {
   presets: [
     '@babel/preset-typescript',
-    ['@babel/preset-env', {modules: false }]
+    [
+      '@babel/preset-env', {
+        // ES shorthand functions cannot be used as constructors
+        include: ['@babel/plugin-transform-shorthand-properties'],
+      }
+    ]
   ],
   plugins: [
     '@okta/babel-plugin-handlebars-inline-precompile'

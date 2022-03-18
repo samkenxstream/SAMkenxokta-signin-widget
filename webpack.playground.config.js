@@ -51,17 +51,16 @@ module.exports = {
   },
   module: {
     rules: [
-      // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+      // all files with a `.ts` or `.tsx` extension will be handled by `preset-typescript`
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader'
-      },
-      {
-        test: /\.js$/,
+        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env']
+          presets: [
+            '@babel/preset-typescript',
+            '@babel/preset-env'
+          ]
         }
       },
     ]
