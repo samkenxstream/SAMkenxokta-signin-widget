@@ -88,6 +88,8 @@ const webpackConfig = {
       'ConfirmationDialog': EMPTY,
 
       'vendor': SHARED_JS + '/vendor',
+
+      'backbone': `${SHARED_JS}/vendor/lib/backbone.js`
     }
   },
 

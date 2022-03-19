@@ -12,8 +12,7 @@
     "checkJs": false,
     "paths": {
       "nls/*": ["../packages/@okta/i18n/src/json/*"],
-      "okta": ["../packages/@okta/courage-dist/"],
-      "@okta/courage": ["../packages/@okta/courage-dist"]
+      "okta": ["../packages/@okta/courage-dist/"]
     }
   },
   "include": [
