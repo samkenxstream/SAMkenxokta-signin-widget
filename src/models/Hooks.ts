@@ -10,8 +10,19 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { Model } from 'okta';
+import { Model, ModelConstructor, ModelInstance } from 'okta';
 import { mergeHook } from 'util/Hooks';
+import { HookDefinition } from 'types';
+
+export interface HooksInstance extends ModelInstance {
+  mergeHook(formName: string, hookToMerge: HookDefinition): void;
+  getHook(formName: string): HookDefinition;
+}
+
+export interface HooksConstructor<I extends HooksInstance = HooksInstance> extends ModelConstructor {
+  new(attributes?, options?): I;
+  extend<S = HooksConstructor>(properties: any, classProperties?: any): S;
+}
 
 export default Model.extend({
 
@@ -26,4 +37,4 @@ export default Model.extend({
     return hooks[formName]; // may be undefined
   }
   
-});
+}) as HooksConstructor;

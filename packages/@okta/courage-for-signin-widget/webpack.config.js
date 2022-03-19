@@ -53,19 +53,6 @@ const babelOptions = {
   }
 };
 
-// TODO: automate this list? include maps?
-const exportCourageTypes = [
-  'framework/View',
-  'views/forms/BaseInput',
-  'models/BaseModel',
-  'models/Model',
-  'util/handlebars-wrapper',
-  'util/jquery-wrapper',
-  'util/underscore-wrapper',
-  'views/Backbone.ListView'
-];
-const EXPORT_COURAGE_TYPES_GLOB = `{${exportCourageTypes.join(',')}}.d.ts`; 
-
 const webpackConfig = {
   mode: 'development',
   entry: ['./src/CourageForSigninWidget'],
@@ -145,11 +132,6 @@ const webpackConfig = {
         context: `${COURAGE_DIST}/properties/translations/`,
         from: 'country_*.properties',
         to: `${I18N_DIR}/dist/properties/`,
-      },
-      {
-        context: `${NODE_MODULES_SRC}/courage/types/generated/src`,
-        from: EXPORT_COURAGE_TYPES_GLOB,
-        to: `${PUBLISH_DIR}/types/@okta/courage`,
       }
     ]),
   ]

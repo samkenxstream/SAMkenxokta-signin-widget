@@ -178,6 +178,7 @@
   "workspaces": {
     "packages": [
       ".",
+      "packages/@okta/courage-dist",
       "env",
       "test/app",
       "test/e2e"

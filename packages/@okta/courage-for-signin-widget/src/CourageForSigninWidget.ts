@@ -1,40 +1,40 @@
-import BaseCollection from '@okta/courage/src/models/BaseCollection';
-import BaseModel from '@okta/courage/src/models/BaseModel';
-import BaseSchema from '@okta/courage/src/models/BaseSchema';
-import Model from '@okta/courage/src/models/Model';
-import SchemaProperty from '@okta/courage/src/models/SchemaProperty';
-import BaseController from '@okta/courage/src/util/BaseController';
-import BaseRouter from '@okta/courage/src/util/BaseRouter';
-import ButtonFactory from '@okta/courage/src/util/ButtonFactory';
-import Class from '@okta/courage/src/util/Class';
-import Cookie from '@okta/courage/src/util/Cookie';
-import Clipboard from '@okta/courage/src/util/Clipboard';
-import Keys from '@okta/courage/src/util/Keys';
-import Logger from '@okta/courage/src/util/Logger';
-import StringUtil from '@okta/courage/src/util/StringUtil';
-import Util from '@okta/courage/src/util/Util';
-import Handlebars from '@okta/courage/src/util/handlebars-wrapper';
-import $ from '@okta/courage/src/util/jquery-wrapper';
-import _ from '@okta/courage/src/util/underscore-wrapper';
-import ListView from '@okta/courage/src/views/Backbone.ListView';
-import BaseView from '@okta/courage/src/views/BaseView';
-import BaseDropDown from '@okta/courage/src/views/components/BaseDropDown';
-import Notification from '@okta/courage/src/views/components/Notification';
-import BaseForm from '@okta/courage/src/views/forms/BaseForm';
-import Toolbar from '@okta/courage/src/views/forms/components/Toolbar';
-import FormUtil from '@okta/courage/src/views/forms/helpers/FormUtil';
-import InputRegistry from '@okta/courage/src/views/forms/helpers/InputRegistry';
-import SchemaFormFactory from '@okta/courage/src/views/forms/helpers/SchemaFormFactory';
-import CheckBox from '@okta/courage/src/views/forms/inputs/CheckBox';
-import PasswordBox from '@okta/courage/src/views/forms/inputs/PasswordBox';
-import Radio from '@okta/courage/src/views/forms/inputs/Radio';
-import Select from '@okta/courage/src/views/forms/inputs/Select';
-import InputGroup from '@okta/courage/src/views/forms/inputs/InputGroup';
-import TextBox from '@okta/courage/src/views/forms/inputs/TextBox';
-import Callout from '@okta/courage/src/views/components/Callout';
+import BaseCollection from './courage/models/BaseCollection';
+import BaseModel from './courage/models/BaseModel';
+import BaseSchema from './courage/models/BaseSchema';
+import Model from './courage/models/Model';
+import SchemaProperty from './courage/models/SchemaProperty';
+import BaseController from './courage/util/BaseController';
+import BaseRouter from './courage/util/BaseRouter';
+import ButtonFactory from './courage/util/ButtonFactory';
+import Class from './courage/util/Class';
+import Cookie from './courage/util/Cookie';
+import Clipboard from './courage/util/Clipboard';
+import Keys from './courage/util/Keys';
+import Logger from './courage/util/Logger';
+import StringUtil from './courage/util/StringUtil';
+import Util from './courage/util/Util';
+import Handlebars from './courage/util/handlebars-wrapper';
+import $ from './courage/util/jquery-wrapper';
+import _ from './courage/util/underscore-wrapper';
+import ListView from './courage/views/Backbone.ListView';
+import BaseView from './courage/views/BaseView';
+import BaseDropDown from './courage/views/components/BaseDropDown';
+import Notification from './courage/views/components/Notification';
+import BaseForm from './courage/views/forms/BaseForm';
+import Toolbar from './courage/views/forms/components/Toolbar';
+import FormUtil from './courage/views/forms/helpers/FormUtil';
+import InputRegistry from './courage/views/forms/helpers/InputRegistry';
+import SchemaFormFactory from './courage/views/forms/helpers/SchemaFormFactory';
+import CheckBox from './courage/views/forms/inputs/CheckBox';
+import PasswordBox from './courage/views/forms/inputs/PasswordBox';
+import Radio from './courage/views/forms/inputs/Radio';
+import Select from './courage/views/forms/inputs/Select';
+import InputGroup from './courage/views/forms/inputs/InputGroup';
+import TextBox from './courage/views/forms/inputs/TextBox';
+import Callout from './courage/views/components/Callout';
 import Backbone from 'backbone';
 
-import FrameworkView from '@okta/courage/src/framework/View';
+import FrameworkView from './courage/framework/View';
 
 import './util/scrollParent';
 
@@ -182,3 +182,5 @@ export {
 
   internal,
 };
+
+export * from './courage/models/Model';

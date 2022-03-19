@@ -13,7 +13,7 @@
     "paths": {
       "nls/*": ["../packages/@okta/i18n/src/json/*"],
       "okta": ["../packages/@okta/courage-dist/"],
-      "@okta/courage/src/*": ["../packages/@okta/courage-dist/types/@okta/courage/*"]
+      "@okta/courage": ["../packages/@okta/courage-dist"]
     }
   },
   "include": [

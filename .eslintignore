@@ -13,3 +13,5 @@ test/unit/helpers/xhr/
 types/.eslintrc.js
 types/generated
 types/**/*.test-d.ts
+packages/@okta/courage-for-signin-widget/src/courage
+packages/@okta/courage-dist/types

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "noEmit": true,
     "baseUrl": ".",
-    "outDir": "../courage-dist/types",
+    "outDir": "./target",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -19,8 +19,7 @@
     }
   },
   "include": [
-    "types/**/*",
-    "src/**/*"
+    "types/**/*"
   ],
   "files": [
     "src/CourageForSigninWidget.ts"
