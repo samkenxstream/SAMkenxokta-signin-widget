@@ -13,7 +13,7 @@
     "paths": {
       "framework/*": ["node_modules/@okta/courage/src/framework/*"],
       "vendor/*": ["node_modules/@okta/courage/src/vendor/*"],
-      "handlebars-inline-precompile": ["buildtools/handlebars-inline-precompile"],
+      "handlebars-inline-precompile": ["../../../scripts/buildtools/tsc/handlebars-inline-precompile"],
       "ConfirmationDialog": ["buildtools/ConfirmationDialog.ts"],
       "okta-i18n-bundles": ["node_modules/@okta/courage/src/okta-i18n-bundles.js"]
     }

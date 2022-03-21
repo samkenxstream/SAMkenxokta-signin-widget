@@ -1,26 +1,24 @@
-declare const _default: any;
-/**
- * A Controller is our application control flow component.
- *
- * Typically it will:
- * - Initialize the models, controller and main views
- * - Listen to events
- * - Create, read, update and delete models
- * - Create modal dialogs, confirmation dialogs and alert dialogs
- * - Control the application flow
- *
- * The constructor is responsible for:
- * - Create the application state object
- * - Assign or creates the application settings object
- * - Create an instance of the main view with the relevant parameters
- *
- * See:
- * [Hello World Tutorial](https://github.com/okta/courage/wiki/Hello-World),
- * [Jasmine Spec](https://github.com/okta/okta-core/blob/master/WebContent/js/test/unit/spec/shared/util/BaseController_spec.js)
- *
- * @class module:Okta.Controller
- * @param {Object} options Options Hash
- * @param {SettingsModel} [options.settings] Application Settings Model
- * @param {String} options.el a jQuery selector string stating where to attach the controller in the DOM
- */
+/// <reference types="backbone" />
+import { SettingsModelInstance } from './SettingsModel';
+import StateMachine from './StateMachine';
+import { BaseViewConstructor, BaseViewInstance } from '../views/BaseView';
+export interface BaseControllerOptions {
+    state?: typeof StateMachine;
+    settings?: SettingsModelInstance;
+}
+export interface BaseControllerPublic {
+    state: typeof StateMachine | Record<string, never>;
+    View: BaseViewConstructor;
+    toJSON(options: any): any;
+}
+export interface BaseControllerInstance extends BaseViewInstance {
+    root: Backbone._Result<string>;
+    settings: SettingsModelInstance;
+}
+export interface BaseControllerConstructor<I extends BaseControllerInstance = BaseControllerInstance> extends Backbone.View {
+    (attributes?: any, options?: any): void;
+    new (attributes?: any, options?: any): I;
+    extend<S = BaseControllerConstructor>(properties: any, classProperties?: any): S;
+}
+declare const _default: BaseControllerConstructor<BaseControllerInstance>;
 export default _default;

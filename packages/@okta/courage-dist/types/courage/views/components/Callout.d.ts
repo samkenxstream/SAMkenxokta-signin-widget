@@ -13,7 +13,7 @@ declare const _default: {
      *
      * @return {src/views/components/Callout}
      */
-    create: (options: any) => any;
+    create: (options: any) => import("../BaseView").BaseViewInstance;
 };
 /**
  * @class src/views/components/Callout

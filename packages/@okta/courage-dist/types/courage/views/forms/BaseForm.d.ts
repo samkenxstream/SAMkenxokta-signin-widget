@@ -1,4 +1,4 @@
-declare const _default: any;
+declare const _default: import("../BaseView").BaseViewConstructor<import("../BaseView").BaseViewInstance>;
 /**
  * A Form utility framework
  *

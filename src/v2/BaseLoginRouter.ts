@@ -14,8 +14,8 @@
 // BaseLoginRouter contains the more complicated router logic - rendering/
 // transition, etc. Most router changes should happen in LoginRouter (which is
 // responsible for adding new routes)
-import { _, $, Backbone, Router, loc } from 'okta';
-import Settings from 'models/Settings';
+import { _, $, Backbone, Router, loc, BaseRouterInstance, BaseRouterConstructor, BaseRouterOptions, BaseRouterPublic } from 'okta';
+import Settings, { SettingsInstance } from 'models/Settings';
 import Bundles from 'util/Bundles';
 import BrowserFeatures from 'util/BrowserFeatures';
 import ColorsUtil from 'util/ColorsUtil';
@@ -25,7 +25,7 @@ import Logger from 'util/Logger';
 import LanguageUtil from 'util/LanguageUtil';
 import AuthContainer from 'views/shared/AuthContainer';
 import Header from 'views/shared/Header';
-import AppState from './models/AppState';
+import AppState, { AppStateInstance } from './models/AppState';
 import sessionStorageHelper from './client/sessionStorageHelper';
 import {
   startLoginFlow,
@@ -36,9 +36,53 @@ import {
 import transformIdxResponse from './ion/transformIdxResponse';
 import { FORMS } from './ion/RemediationConstants';
 import CookieUtil from 'util/CookieUtil';
-import { formatError } from './client/formatError';
+import { formatError, LegacyIdxError, StandardApiError } from './client/formatError';
+import { IdxResponse } from '@okta/okta-auth-js/lib/idx/types/idx-js'; // TODO authJS will export this directly in version 6.3
+import { RenderError, RenderResult } from 'types';
+import { OktaAuth } from '@okta/okta-auth-js';
+import { HooksInstance } from 'models/Hooks';
 
-export default Router.extend({
+// TODO: types will be updated from okta-auth-js in version 6.3
+declare module '@okta/okta-auth-js/lib/idx/types/idx-js' {
+  interface RawIdxResponse {
+    success?: boolean;
+    successWithInteractionCode?: boolean;
+  }
+}
+
+export interface BaseLoginRouterOptions extends BaseRouterOptions {
+  globalSuccessFn?: (res: RenderResult) => void;
+  globalErrorFn?: (res: RenderError) => void;
+  authClient?: OktaAuth;
+  hooks: HooksInstance
+}
+export interface BaseLoginRouterPublic extends Pick<BaseRouterPublic, 'render' | 'start'> {
+  Events: typeof Backbone.Events;
+  hasControllerRendered: boolean;
+  initialize(options?: BaseLoginRouterOptions): void;
+  updateDeviceFingerprint();
+  handleUpdateAppState(idxResponse: IdxResponse): Promise<IdxResponse>;
+  handleIdxResponseFailure(error: LegacyIdxError);
+  handleError(error: LegacyIdxError | StandardApiError | Error);
+  updateIdentifierCookie(idxResponse: IdxResponse);
+  hasAuthenticationSucceeded(idxResponse: IdxResponse);
+  restartLoginFlow();
+  hide();
+  show();
+  remove();
+}
+
+export interface BaseLoginRouterInstance extends BaseLoginRouterPublic, Omit<BaseRouterInstance, 'initialize' | 'settings'> {
+  settings: SettingsInstance;
+  appState: AppStateInstance;
+  hooks: HooksInstance;
+}
+export interface BaseLoginRouterConstructor<I extends BaseLoginRouterInstance = BaseLoginRouterInstance> extends BaseRouterConstructor {
+  new(options): I;
+  extend<S = BaseLoginRouterConstructor>(properties: any, classProperties?: any): S;
+}
+
+const props: BaseLoginRouterPublic = {
   Events: Backbone.Events,
   hasControllerRendered: false,
 
@@ -100,7 +144,7 @@ export default Router.extend({
     }
   },
 
-  async handleUpdateAppState(idxResponse) {
+  async handleUpdateAppState(this: BaseLoginRouterInstance, idxResponse) {
     // Only update the cookie when the user has successfully authenticated themselves 
     // to avoid incorrect/unnecessary updates.
     if (this.hasAuthenticationSucceeded(idxResponse) 
@@ -144,14 +188,14 @@ export default Router.extend({
     await this.appState.setIonResponse(ionResponse, this.hooks);
   },
 
-  handleIdxResponseFailure(error = { details: undefined }) {
+  handleIdxResponseFailure(error = { error: 'unknown', details: undefined }) {
     // IDX errors will not call the global error handler
     error = formatError(error);
     this.handleUpdateAppState(error.details);
   },
 
   // Generic error handler for all exceptions
-  handleError(error = {}) {
+  handleError(error = { error: 'unknown', details: undefined }) {
     // Show error message and notify listeners
     const originalError = error;
     const formattedError = formatError({...error}); // format the error to resemble an IDX response
@@ -295,4 +339,6 @@ export default Router.extend({
     Bundles.remove();
     Backbone.history.stop();
   },
-});
+};
+
+export default Router.extend(props) as BaseLoginRouterConstructor;

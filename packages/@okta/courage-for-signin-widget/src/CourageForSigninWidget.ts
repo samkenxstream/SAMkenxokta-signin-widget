@@ -183,4 +183,9 @@ export {
   internal,
 };
 
+// Additional type exports
 export * from './courage/models/Model';
+export * from './courage/util/BaseRouter';
+export * from './courage/util/SettingsModel';
+export * from './courage/util/jquery-wrapper';
+export * from './courage/util/underscore-wrapper';
