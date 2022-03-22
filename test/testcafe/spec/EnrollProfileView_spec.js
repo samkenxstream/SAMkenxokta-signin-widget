@@ -185,4 +185,10 @@ test.requestHooks(requestLogger, EnrollProfileSignUpWithPasswordMock)('should sh
   await t.expect(await enrollProfilePage.form.elementExist('ul[class="password-authenticator--list"]')).ok();
 
   await t.expect(await enrollProfilePage.getSaveButtonLabel()).eql('Sign Up');
+
+  // Fill in attribute fields
+  await enrollProfilePage.setTextBoxValue('userProfile.firstName', 'First');
+  await enrollProfilePage.setTextBoxValue('userProfile.lastName', 'Last');
+  await enrollProfilePage.setTextBoxValue('userProfile.email', 'first@last.com');
+  await identityPage.fillPasswordField("secretPassword");
 });
