@@ -1270,7 +1270,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var backbone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(backbone__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var View;
 var CHILDREN = '__children__';
 var RENDERED = '__rendered__';
 var PARENT = '__parent__';
@@ -1364,9 +1363,8 @@ function subscribeEvents(view) {
    */
 
 
-View = backbone__WEBPACK_IMPORTED_MODULE_1___default().View.extend(
-/** @lends src/framework/View.prototype */
-{
+var View;
+var proto = {
   /**
      * An object listing events and callback bind to this.{entity}
      * @name *Events
@@ -1822,7 +1820,10 @@ View = backbone__WEBPACK_IMPORTED_MODULE_1___default().View.extend(
     });
     return this;
   }
-}); // Code borrowed from Backbone.js source
+};
+View = backbone__WEBPACK_IMPORTED_MODULE_1___default().View.extend(
+/** @lends src/framework/View.prototype */
+proto); // Code borrowed from Backbone.js source
 // Underscore methods that we want to implement on the Container.
 
 var methods = ['each', 'map', 'reduce', 'reduceRight', 'find', 'filter', 'reject', 'every', 'some', 'contains', 'toArray', 'size', 'first', 'initial', 'rest', 'last', 'without', 'indexOf', 'shuffle', 'lastIndexOf', 'isEmpty', 'chain', 'where', 'findWhere'];
@@ -3301,9 +3302,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BaseRouter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BaseRouter */ "../../../../../../okta/okta-ui/packages/courage/src/util/BaseRouter.ts");
 /* harmony import */ var _SettingsModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SettingsModel */ "../../../../../../okta/okta-ui/packages/courage/src/util/SettingsModel.ts");
 /* harmony import */ var _StateMachine__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./StateMachine */ "../../../../../../okta/okta-ui/packages/courage/src/util/StateMachine.ts");
-/* harmony import */ var _views_BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../views/BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _views_BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../views/BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* eslint max-len: [2, 150] */
 
+ // eslint-disable-next-line import/no-cycle
 
 
 
@@ -3347,7 +3349,7 @@ function clean(obj) {
  */
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_views_BaseView__WEBPACK_IMPORTED_MODULE_5__.default.extend(
+var proto =
 /** @lends module:Okta.Controller.prototype */
 {
   constructor: function constructor() {
@@ -3446,7 +3448,8 @@ function clean(obj) {
     this.$el.empty();
     return this;
   }
-}));
+};
+/* harmony default export */ __webpack_exports__["default"] = (_views_BaseView__WEBPACK_IMPORTED_MODULE_5__.default.extend(proto));
 
 /***/ }),
 
@@ -3473,7 +3476,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // eslint-disable-next-line import/no-cycle
 
 function getRoute(router, route) {
   var root = _underscore_wrapper__WEBPACK_IMPORTED_MODULE_3__.default.result(router, 'root') || '';
@@ -3511,7 +3514,7 @@ var props =
   root: '',
   listen: _views_components_Notification__WEBPACK_IMPORTED_MODULE_6__.default.prototype.listen,
   constructor: function constructor() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     this.el = options.el;
     /**
      * Make sure `this.settings` has been set before invoke super - `Backbone.Router.apply`,
@@ -3551,7 +3554,7 @@ var props =
    * @return {Okta.View} the dialog view
    */
   _confirm: function _confirm() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var Dialog = ConfirmationDialog__WEBPACK_IMPORTED_MODULE_1__.default.extend(_underscore_wrapper__WEBPACK_IMPORTED_MODULE_3__.default.pick(options, 'title', 'subtitle', 'save', 'ok', 'cancel', 'cancelFn', 'noCancelButton', 'noSubmitButton', 'content', 'danger', 'type', 'closeOnOverlayClick', 'buttonOrder'));
     var dialog = new Dialog({
       model: this.settings
@@ -3621,19 +3624,9 @@ var props =
       this.controller.remove();
     }
   },
-  route: function (_route) {
-    function route(_x, _x2, _x3) {
-      return _route.apply(this, arguments);
-    }
-
-    route.toString = function () {
-      return _route.toString();
-    };
-
-    return route;
-  }(function (route, name, callback) {
-    return backbone__WEBPACK_IMPORTED_MODULE_0___default().Router.prototype.route.call(this, getRoute(this, route), name, callback);
-  }),
+  route: function route(_route, name, callback) {
+    return backbone__WEBPACK_IMPORTED_MODULE_0___default().Router.prototype.route.call(this, getRoute(this, _route), name, callback);
+  },
   navigate: function navigate(fragment, options) {
     return backbone__WEBPACK_IMPORTED_MODULE_0___default().Router.prototype.navigate.call(this, getRoute(this, fragment), options);
   }
@@ -4920,7 +4913,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
-/* harmony import */ var _views_BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views/BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _views_BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views/BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -9236,7 +9229,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! http://mths.
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _framework_ListView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../framework/ListView */ "../../../../../../okta/okta-ui/packages/courage/src/framework/ListView.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 /**
@@ -9250,9 +9243,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js":
+/***/ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts":
 /*!*****************************************************************************!*\
-  !*** ../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js ***!
+  !*** ../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts ***!
   \*****************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -9380,6 +9373,7 @@ var proto = {
     if (typeof title === 'object') {
       options = title;
     } else {
+      // eslint-disable-next-line no-lonely-if
       if (arguments.length === 2 && _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_1__.default.isFunction(message)) {
         options = {
           title: 'Okta',
@@ -9467,7 +9461,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _util_ViewUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/ViewUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/ViewUtil.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -9755,7 +9749,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_jquery_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/jquery-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/jquery-wrapper.ts");
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -10161,7 +10155,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _util_Time__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/Time */ "../../../../../../okta/okta-ui/packages/courage/src/util/Time.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -10555,7 +10549,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! handlebars/runtime */ "handlebars/runtime");
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -10749,9 +10743,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_jquery_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/jquery-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/jquery-wrapper.ts");
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _util_StringUtil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/StringUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/StringUtil.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _components_ReadModeBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ReadModeBar */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/ReadModeBar.js");
-/* harmony import */ var _components_Toolbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Toolbar */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.js");
+/* harmony import */ var _components_Toolbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Toolbar */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.ts");
 /* harmony import */ var _helpers_ErrorBanner__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helpers/ErrorBanner */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/ErrorBanner.js");
 /* harmony import */ var _helpers_ErrorParser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helpers/ErrorParser */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/ErrorParser.ts");
 /* harmony import */ var _helpers_FormUtil__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./helpers/FormUtil */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/FormUtil.ts");
@@ -12062,7 +12056,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _util_ButtonFactory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/ButtonFactory */ "../../../../../../okta/okta-ui/packages/courage/src/util/ButtonFactory.ts");
 /* harmony import */ var _util_StringUtil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/StringUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/StringUtil.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _components_Callout__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Callout */ "../../../../../../okta/okta-ui/packages/courage/src/views/components/Callout.ts");
 
 
@@ -12552,7 +12546,7 @@ var constructor = _BaseView__WEBPACK_IMPORTED_MODULE_5__.default.extend(props);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _helpers_FormUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/FormUtil */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/FormUtil.ts");
 
 
@@ -12586,21 +12580,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.js":
+/***/ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.ts":
 /*!*********************************************************************************************!*\
-  !*** ../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.js ***!
+  !*** ../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.ts ***!
   \*********************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _helpers_FormUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/FormUtil */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/FormUtil.ts");
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_BaseView__WEBPACK_IMPORTED_MODULE_1__.default.extend({
+var proto = {
   className: 'o-form-button-bar',
   buttonOrder: ['previous', 'save', 'cancel'],
   initialize: function initialize(options) {
@@ -12652,7 +12646,8 @@ __webpack_require__.r(__webpack_exports__);
 
     return _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__.default.without(buttonOrder, ...buttonsToSkip);
   }
-}));
+};
+/* harmony default export */ __webpack_exports__["default"] = (_BaseView__WEBPACK_IMPORTED_MODULE_1__.default.extend(proto));
 
 /***/ }),
 
@@ -12877,7 +12872,7 @@ function isConstraintValueMatchType(value, type) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! handlebars/runtime */ "handlebars/runtime");
 /* harmony import */ var handlebars_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(handlebars_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_BaseView__WEBPACK_IMPORTED_MODULE_1__.default.extend({
@@ -13101,7 +13096,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_Logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/Logger */ "../../../../../../okta/okta-ui/packages/courage/src/util/Logger.ts");
 /* harmony import */ var _util_StringUtil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/StringUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/StringUtil.ts");
 /* harmony import */ var _util_ViewUtil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../util/ViewUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/ViewUtil.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* eslint max-params: [2, 6] */
 
 
@@ -13460,7 +13455,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_Logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/Logger */ "../../../../../../okta/okta-ui/packages/courage/src/util/Logger.ts");
 /* harmony import */ var _util_Util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/Util */ "../../../../../../okta/okta-ui/packages/courage/src/util/Util.ts");
 /* harmony import */ var _util_StringUtil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../util/StringUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/StringUtil.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -13849,7 +13844,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var qtip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! qtip */ "qtip");
 /* harmony import */ var qtip__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(qtip__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -14284,7 +14279,7 @@ function isBaseInput(input) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _FormUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FormUtil */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/FormUtil.ts");
 
 
@@ -14972,7 +14967,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_SchemaUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/SchemaUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/SchemaUtil.ts");
 /* harmony import */ var _util_StringUtil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/StringUtil */ "../../../../../../okta/okta-ui/packages/courage/src/util/StringUtil.ts");
 /* harmony import */ var _util_Time__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../util/Time */ "../../../../../../okta/okta-ui/packages/courage/src/util/Time.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 
 
 
@@ -15185,7 +15180,7 @@ var updateArrayEvent = 'updateArray';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _util_ButtonFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util/ButtonFactory */ "../../../../../../okta/okta-ui/packages/courage/src/util/ButtonFactory.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _BaseInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BaseInput */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/BaseInput.ts");
 
 
@@ -15405,7 +15400,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _util_Keys__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../util/Keys */ "../../../../../../okta/okta-ui/packages/courage/src/util/Keys.ts");
 /* harmony import */ var _util_Util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../util/Util */ "../../../../../../okta/okta-ui/packages/courage/src/util/Util.ts");
-/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _BaseView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var vendor_plugins_jquery_custominput__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vendor/plugins/jquery.custominput */ "../../../../../../okta/okta-ui/packages/courage/src/vendor/plugins/jquery.custominput.js");
 /* harmony import */ var vendor_plugins_jquery_custominput__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vendor_plugins_jquery_custominput__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _BaseInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../BaseInput */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/BaseInput.ts");
@@ -17686,11 +17681,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _courage_util_jquery_wrapper__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./courage/util/jquery-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/jquery-wrapper.ts");
 /* harmony import */ var _courage_util_underscore_wrapper__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./courage/util/underscore-wrapper */ "../../../../../../okta/okta-ui/packages/courage/src/util/underscore-wrapper.ts");
 /* harmony import */ var _courage_views_Backbone_ListView__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./courage/views/Backbone.ListView */ "../../../../../../okta/okta-ui/packages/courage/src/views/Backbone.ListView.js");
-/* harmony import */ var _courage_views_BaseView__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./courage/views/BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.js");
+/* harmony import */ var _courage_views_BaseView__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./courage/views/BaseView */ "../../../../../../okta/okta-ui/packages/courage/src/views/BaseView.ts");
 /* harmony import */ var _courage_views_components_BaseDropDown__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./courage/views/components/BaseDropDown */ "../../../../../../okta/okta-ui/packages/courage/src/views/components/BaseDropDown.js");
 /* harmony import */ var _courage_views_components_Notification__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./courage/views/components/Notification */ "../../../../../../okta/okta-ui/packages/courage/src/views/components/Notification.js");
 /* harmony import */ var _courage_views_forms_BaseForm__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./courage/views/forms/BaseForm */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/BaseForm.ts");
-/* harmony import */ var _courage_views_forms_components_Toolbar__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./courage/views/forms/components/Toolbar */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.js");
+/* harmony import */ var _courage_views_forms_components_Toolbar__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./courage/views/forms/components/Toolbar */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/components/Toolbar.ts");
 /* harmony import */ var _courage_views_forms_helpers_FormUtil__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./courage/views/forms/helpers/FormUtil */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/FormUtil.ts");
 /* harmony import */ var _courage_views_forms_helpers_InputRegistry__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./courage/views/forms/helpers/InputRegistry */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/InputRegistry.ts");
 /* harmony import */ var _courage_views_forms_helpers_SchemaFormFactory__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./courage/views/forms/helpers/SchemaFormFactory */ "../../../../../../okta/okta-ui/packages/courage/src/views/forms/helpers/SchemaFormFactory.ts");
@@ -17705,6 +17700,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var backbone__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(backbone__WEBPACK_IMPORTED_MODULE_34__);
 /* harmony import */ var _courage_framework_View__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./courage/framework/View */ "../../../../../../okta/okta-ui/packages/courage/src/framework/View.ts");
 /* harmony import */ var _util_scrollParent__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./util/scrollParent */ "./src/util/scrollParent.ts");
+/* harmony import */ var _courage_util_SettingsModel__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./courage/util/SettingsModel */ "../../../../../../okta/okta-ui/packages/courage/src/util/SettingsModel.ts");
 
 
 
@@ -17835,6 +17831,11 @@ registerInput('checkbox', _courage_views_forms_inputs_CheckBox__WEBPACK_IMPORTED
 registerInput('radio', _courage_views_forms_inputs_Radio__WEBPACK_IMPORTED_MODULE_29__.default);
 registerInput('select', _courage_views_forms_inputs_Select__WEBPACK_IMPORTED_MODULE_30__.default);
 registerInput('group', _courage_views_forms_inputs_InputGroup__WEBPACK_IMPORTED_MODULE_31__.default);
+ // Additional type exports
+
+
+
+
 
 
 }();

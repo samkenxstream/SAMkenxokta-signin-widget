@@ -58,8 +58,8 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [
-            '@babel/preset-typescript',
-            '@babel/preset-env'
+            '@babel/preset-env',
+            '@babel/preset-typescript' // must run before preset-env: https://github.com/babel/babel/issues/12066
           ]
         }
       },

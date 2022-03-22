@@ -25,7 +25,8 @@ module.exports = function(outputFilename, mode = 'development') {
   };
 
   if (mode === 'production') {
-    babelOptions.presets.push('@babel/preset-env');
+    // preset-env must run before preset-typescript https://github.com/babel/babel/issues/12066
+    babelOptions.presets.unshift('@babel/preset-env'); 
   } else {
     // In local development, we would prefer not to include any babel transforms as they make debugging more difficult
     // However, there is an issue with testcafe which requires us to include the optional chaining transform

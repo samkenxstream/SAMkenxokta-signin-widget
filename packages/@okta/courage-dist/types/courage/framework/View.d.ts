@@ -23,7 +23,7 @@ export interface FrameworkViewPublic {
     add(view: any, selector: any, bubble?: any, prepend?: any, extraOptions?: any): any;
     children: Backbone._Result<ChildDefinition[]>;
     autoRender: boolean;
-    template: string;
+    template: string | CompiledTemplate;
     rendered(): boolean;
     preRender(): any;
     postRender(): any;

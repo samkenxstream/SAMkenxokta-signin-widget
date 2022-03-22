@@ -6,6 +6,7 @@ interface SettingsModelPublic {
     isDsTheme(): any;
 }
 export interface SettingsModelInstance extends SettingsModelPublic, ModelInstance {
+    features: string[];
 }
 export interface SettingsModelConstructor extends ModelConstructor {
     new (attributes?: any, options?: any): SettingsModelInstance;

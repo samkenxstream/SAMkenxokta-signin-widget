@@ -9,12 +9,10 @@ export interface BaseViewPublic {
     alert(params: any): BaseViewInstance;
 }
 export interface BaseViewInstance extends BaseViewPublic, FrameworkViewInstance {
-    removeChildren(): this;
     module?: {
         id: string;
     };
-    decorate(TargetView: any): any;
-    content(): string;
+    decorate(TargetView: any): TargetView is BaseViewConstructor;
 }
 export interface BaseViewConstructor<I extends BaseViewInstance = BaseViewInstance> extends Backbone.View {
     new (attributes?: any, options?: any): I;
