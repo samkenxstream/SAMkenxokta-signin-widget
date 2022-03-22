@@ -31,7 +31,7 @@ module.exports = function(outputFilename, mode = 'development') {
     // In local development, we would prefer not to include any babel transforms as they make debugging more difficult
     // However, there is an issue with testcafe which requires us to include the optional chaining transform
     // https://github.com/DevExpress/testcafe-hammerhead/issues/2714
-    babelOptions.plugins.push('@babel/plugin-proposal-optional-chaining');
+    babelOptions.plugins.unshift('@babel/plugin-proposal-optional-chaining');
   }
 
   return {

@@ -3514,7 +3514,7 @@ var props =
   root: '',
   listen: _views_components_Notification__WEBPACK_IMPORTED_MODULE_6__.default.prototype.listen,
   constructor: function constructor() {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     this.el = options.el;
     /**
      * Make sure `this.settings` has been set before invoke super - `Backbone.Router.apply`,
@@ -3554,7 +3554,7 @@ var props =
    * @return {Okta.View} the dialog view
    */
   _confirm: function _confirm() {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var Dialog = ConfirmationDialog__WEBPACK_IMPORTED_MODULE_1__.default.extend(_underscore_wrapper__WEBPACK_IMPORTED_MODULE_3__.default.pick(options, 'title', 'subtitle', 'save', 'ok', 'cancel', 'cancelFn', 'noCancelButton', 'noSubmitButton', 'content', 'danger', 'type', 'closeOnOverlayClick', 'buttonOrder'));
     var dialog = new Dialog({
       model: this.settings

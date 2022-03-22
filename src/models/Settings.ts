@@ -410,7 +410,7 @@ export default Model.extend({
 
   set: function(...args: any[]) {
     try {
-      return Model.prototype.set.apply(this, ...args);
+      return Model.prototype.set.apply(this, args);
     } catch (e) {
       const message = e.message ? e.message : e;
 
