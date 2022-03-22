@@ -190,5 +190,5 @@ test.requestHooks(requestLogger, EnrollProfileSignUpWithPasswordMock)('should sh
   await enrollProfilePage.setTextBoxValue('userProfile.firstName', 'First');
   await enrollProfilePage.setTextBoxValue('userProfile.lastName', 'Last');
   await enrollProfilePage.setTextBoxValue('userProfile.email', 'first@last.com');
-  await identityPage.fillPasswordField("secretPassword");
+  await identityPage.fillPasswordField('secretPassword');
 });
