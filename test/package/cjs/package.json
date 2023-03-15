@@ -10,6 +10,6 @@
     "@okta/okta-signin-widget": "file:../../../dist"
   },
   "devDependencies": {
-    "webpack": "^5.51.1"
+    "webpack": "^5.76.0"
   }
 }
